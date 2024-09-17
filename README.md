@@ -1,4 +1,4 @@
-# 🎵 Symphony Stream: Real-Time Music Analytics Pipeline 🚀
+# Symphony Stream: Real-Time Music Analytics Pipeline 🚀
 
 Dive into the world of real-time data engineering with a Spotify-like data pipeline! Harness the power of Kafka, Spark Streaming, dbt, Docker, Airflow, Terraform, GCP, and more!
 
@@ -21,7 +21,7 @@ We're using [Eventsim](https://github.com/Interana/eventsim) - a cool program th
 - Data source: [viirya's Eventsim fork](https://github.com/viirya/eventsim) (Because even data needs a remix sometimes!)
 - Song data: [Million Songs Dataset](http://millionsongdataset.com) (We're using a [subset](http://millionsongdataset.com/pages/getting-dataset/#subset) of 10,000 songs to keep things groovy)
 
-## 🛠️ Our Tech Symphony
+## 🛠️ Tech Stack:
 
 - Cloud Virtuoso: [**Google Cloud Platform**](https://cloud.google.com)
 - Infrastructure Composer: [**Terraform**](https://www.terraform.io)
@@ -34,11 +34,11 @@ We're using [Eventsim](https://github.com/Interana/eventsim) - a cool program th
 - Visualization Virtuoso: [**Data Studio**](https://datastudio.google.com/overview)
 - Language of Choice: [**Python**](https://www.python.org) 🐍
 
-## 🏗️ Architecture: Our Data Symphony
+## Architecture:
 
 ![streamify-architecture](images/Streamify-Architecture.jpg)
 
-## 🎭 The Grand Finale: Our Dashboard
+## Dashboard:
 
 ![dashboard](images/dashboard.png)
 
@@ -58,7 +58,7 @@ Already a GCP and Terraform pro? Skip to the main event! For the rest:
 
 ### 🎉 The Main Event
 
-Watch the maestro at work: [YouTube Project Walkthrough](https://youtu.be/vzoYhI8KTlY)
+
 
 1. Set the stage with GCP infrastructure: [Terraform Setup](setup/terraform.md)
 2. (Bonus Track) SSH into VMs & Port Forwarding: [SSH Guide](setup/ssh.md)
