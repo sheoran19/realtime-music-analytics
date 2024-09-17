@@ -1,20 +1,22 @@
 terraform {
-  required_version = ">=1.0"
-  backend "local" {}
+  required_version = ">= 1.0"
+  backend "local" {} # Can be changed to a more robust backend like GCS
+
   required_providers {
     google = {
-      source = "hashicorp/google"
+      source  = "hashicorp/google"
+      version = "~> 4.51"
     }
   }
 }
+
 
 provider "google" {
   project = var.project
   region  = var.region
   zone    = var.zone
-  // credentials = file(var.credentials)  # Use this if you do not want to set env-var GOOGLE_APPLICATION_CREDENTIALS
+  # credentials = file(var.credentials)  # Uncomment if not using GOOGLE_APPLICATION_CREDENTIALS
 }
-
 
 resource "google_compute_firewall" "port_rules" {
   project     = var.project
@@ -34,7 +36,7 @@ resource "google_compute_firewall" "port_rules" {
 
 resource "google_compute_instance" "kafka_vm_instance" {
   name                      = "streamify-kafka-instance"
-  machine_type              = "e2-standard-4"
+  machine_type              = "e2-standard-2"
   tags                      = ["kafka"]
   allow_stopping_for_update = true
 
@@ -55,7 +57,7 @@ resource "google_compute_instance" "kafka_vm_instance" {
 
 resource "google_compute_instance" "airflow_vm_instance" {
   name                      = "streamify-airflow-instance"
-  machine_type              = "e2-standard-4"
+  machine_type              = "e2-medium"
   allow_stopping_for_update = true
 
   boot_disk {
@@ -95,12 +97,17 @@ resource "google_dataproc_cluster" "mulitnode_spark_cluster" {
   region = var.region
 
   cluster_config {
-
     staging_bucket = var.bucket
+
+    endpoint_config {
+    enable_http_port_access = true
+  }
 
     gce_cluster_config {
       network = var.network
       zone    = var.zone
+
+      internal_ip_only = false
 
       shielded_instance_config {
         enable_secure_boot = true
@@ -125,16 +132,15 @@ resource "google_dataproc_cluster" "mulitnode_spark_cluster" {
     }
 
     software_config {
-      image_version = "2.0-debian10"
+      image_version = "2.1.65-debian11" # can be updated to 2.2.x for Dataproc
       override_properties = {
         "dataproc:dataproc.allow.zero.workers" = "true"
       }
       optional_components = ["JUPYTER"]
     }
-
   }
-
 }
+
 
 resource "google_bigquery_dataset" "stg_dataset" {
   dataset_id                 = var.stg_bq_dataset
